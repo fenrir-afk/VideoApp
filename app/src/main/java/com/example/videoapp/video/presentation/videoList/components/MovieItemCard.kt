@@ -66,9 +66,6 @@ fun MovieItemCard(item: Video?, modifier: Modifier) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(220.dp),
-                loading = {
-                    CircularProgressIndicator()
-                }
             )
             Spacer(modifier = Modifier.height(10.dp))
             Text(

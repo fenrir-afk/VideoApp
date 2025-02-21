@@ -26,14 +26,14 @@ class VideoViewModel(
         VideoListState()
     )
 
-    private fun loadVideos(){
+    fun loadVideos(){
         viewModelScope.launch {
             dataSource.getAllVideos(state.value.page).onSuccess { items->
                 _state.update {
                     it.copy(
                         page = it.page + 1,
                         isLoading = false,
-                        videos = state.value.videos + items,
+                        videos = items,
                     )
                 }
             }.onError { error->

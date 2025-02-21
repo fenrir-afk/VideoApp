@@ -76,6 +76,9 @@ dependencies {
     implementation(libs.androidx.media3.session) // [Required] MediaSession Extension dependency
     implementation(libs.androidx.media3.ui) // [Required] Base Player UI
 
+    implementation(libs.accompanist.swiperefresh)
+
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)

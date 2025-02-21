@@ -25,7 +25,7 @@ android {
 
     buildTypes {
         debug{
-            buildConfigField("String","BASE_URL","\"https://furniture-api.fly.dev/v1/\"")
+            buildConfigField("String","BASE_URL","\"https://api.coverr.co/videos/\"")
         }
         release {
             isMinifyEnabled = false
@@ -33,7 +33,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            buildConfigField("String","BASE_URL","\"https://furniture-api.fly.dev/v1/\"")
+            buildConfigField("String","BASE_URL","\"https://api.coverr.co/videos/\"")
         }
     }
     compileOptions {
@@ -72,9 +72,9 @@ dependencies {
     //navigation
     implementation(libs.androidx.navigation.compose)
     //exo player
-    implementation(libs.androidx.media3.exoplayer) // androidx.media3 ExoPlayer dependency
-    implementation(libs.androidx.media3.session) // MediaSession Extension dependency
-    implementation(libs.androidx.media3.ui) //Base Player UI
+    implementation(libs.androidx.media3.exoplayer) // [Required] androidx.media3 ExoPlayer dependency
+    implementation(libs.androidx.media3.session) // [Required] MediaSession Extension dependency
+    implementation(libs.androidx.media3.ui) // [Required] Base Player UI
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

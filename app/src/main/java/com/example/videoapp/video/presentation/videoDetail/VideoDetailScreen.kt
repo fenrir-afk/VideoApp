@@ -25,6 +25,7 @@ import androidx.media3.common.util.UnstableApi
 import androidx.media3.datasource.DefaultHttpDataSource
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.hls.HlsMediaSource
+import androidx.media3.exoplayer.source.ProgressiveMediaSource
 import androidx.media3.ui.PlayerView
 
 object ExoPlayerManager {
@@ -63,13 +64,13 @@ fun LiveStreamingScreen() {
 
         // Define the URI for the sample HLS stream
         val uri = Uri.Builder()
-            .encodedPath("https://sample.vodobox.net/skate_phantom_flex_4k/skate_phantom_flex_4k.m3u8")
+            .encodedPath("https://cdn.coverr.co/videos/coverr-palacio-de-bellas-artes-8229/1080p.mp4?download=true")
             .build()
         val mediaItem = MediaItem.Builder().setUri(uri).build()
 
         // Create an HlsMediaSource from the media item for handling HTTP Live Streaming (HLS) content
         val internetVideoSource =
-            HlsMediaSource.Factory(dataSourceFactory).createMediaSource(mediaItem)
+            ProgressiveMediaSource.Factory(dataSourceFactory).createMediaSource(mediaItem) // Changed MediaSource
 
         exoPlayer.setMediaSource(internetVideoSource)
         exoPlayer.prepare()

@@ -57,7 +57,7 @@ fun MovieItemCard(item: Video?, modifier: Modifier) {
                 contentDescription = "",
                 contentScale = ContentScale.FillBounds,
                 onError = { ex ->
-                    Log.e("TAG_IMAGE_ERROR", "MovieItemCard: ")
+                    Log.e("TAG_IMAGE_ERROR", "Error: ${ex.result}")
                 },
                 error = {
                     painterResource(R.drawable.ic_error)

@@ -5,7 +5,6 @@ import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -22,6 +21,7 @@ import androidx.navigation.navigation
 import com.example.furniturestore.core.navigation.Route
 import com.example.videoapp.core.presentation.ObserveAsEvents
 import com.example.videoapp.ui.theme.VideoAppTheme
+import com.example.videoapp.video.presentation.videoDetail.LiveStreamingScreen
 import com.example.videoapp.video.presentation.videoList.VideoListScreen
 import com.example.videoapp.video.presentation.videoList.VideoListEvent
 import com.example.videoapp.video.presentation.videoList.VideoViewModel
@@ -93,7 +93,7 @@ fun FurnitureNavigation(
                         }
                     }
                 ) {
-                    Text("Hellow world")
+                    LiveStreamingScreen()
                 }
             }
         }

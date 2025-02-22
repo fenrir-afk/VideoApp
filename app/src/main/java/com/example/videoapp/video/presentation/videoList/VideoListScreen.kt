@@ -31,7 +31,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
-import com.example.furniturestore.core.navigation.Route
+
 import com.example.videoapp.ui.theme.VideoAppTheme
 import com.example.videoapp.video.data.networking.dto.Urls
 import com.example.videoapp.video.domain.model.Video

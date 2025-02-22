@@ -4,9 +4,7 @@ import android.widget.Toast
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideIn
-import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOut
-import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -27,7 +25,7 @@ import com.example.furniturestore.core.navigation.Route
 import com.example.videoapp.core.presentation.ObserveAsEvents
 import com.example.videoapp.ui.theme.VideoAppTheme
 import com.example.videoapp.video.domain.model.Video
-import com.example.videoapp.video.presentation.videoDetail.LiveStreamingScreen
+import com.example.videoapp.video.presentation.videoDetail.WatchVideoScreen
 import com.example.videoapp.video.presentation.videoList.VideoListActions
 import com.example.videoapp.video.presentation.videoList.VideoListScreen
 import com.example.videoapp.video.presentation.videoList.VideoListEvent
@@ -97,7 +95,7 @@ fun FurnitureNavigation(
                         fadeOut() + slideOut(targetOffset = { IntOffset(-it.width, 0)})
                     }
                 ) {
-                    LiveStreamingScreen(
+                    WatchVideoScreen(
                         state = state
                     )
                 }

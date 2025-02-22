@@ -1,7 +1,6 @@
 package com.example.videoapp.video.presentation.videoDetail
 
 
-import android.content.Context
 import android.net.Uri
 import androidx.annotation.OptIn
 import androidx.compose.foundation.background
@@ -12,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -31,7 +29,7 @@ import com.example.videoapp.video.presentation.videoList.VideoListState
 
 @OptIn(UnstableApi::class)
 @Composable
-fun LiveStreamingScreen(
+fun WatchVideoScreen(
     state:VideoListState
 ) {
     val context = LocalContext.current

@@ -18,7 +18,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -40,7 +39,7 @@ fun MovieItemCard(item: Video?, modifier: Modifier) {
     Card(
         modifier = Modifier
             .padding(all = 10.dp)
-            .background(color = Color.White)
+            .background(MaterialTheme.colorScheme.background)
             .clickable {
 
             },

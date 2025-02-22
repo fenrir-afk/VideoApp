@@ -1,7 +1,11 @@
 package com.example.videoapp.core.navigation
 
 import android.widget.Toast
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideIn
 import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOut
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
@@ -13,6 +17,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.IntOffset
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -21,7 +26,9 @@ import androidx.navigation.navigation
 import com.example.furniturestore.core.navigation.Route
 import com.example.videoapp.core.presentation.ObserveAsEvents
 import com.example.videoapp.ui.theme.VideoAppTheme
+import com.example.videoapp.video.domain.model.Video
 import com.example.videoapp.video.presentation.videoDetail.LiveStreamingScreen
+import com.example.videoapp.video.presentation.videoList.VideoListActions
 import com.example.videoapp.video.presentation.videoList.VideoListScreen
 import com.example.videoapp.video.presentation.videoList.VideoListEvent
 import com.example.videoapp.video.presentation.videoList.VideoViewModel
@@ -62,13 +69,14 @@ fun FurnitureNavigation(
                 startDestination = Route.VideoList
             ) {
                 composable<Route.VideoList>(
-                    exitTransition = { slideOutHorizontally() },
-                    popEnterTransition = { slideInHorizontally() }
+                    exitTransition = { fadeOut() + slideOut(targetOffset = { IntOffset(-it.width, 0)}) },
+                    popEnterTransition = { fadeIn() + slideIn(initialOffset = { IntOffset(-it.width, 0) }) }
                 ) {
                         VideoAppTheme {
                             VideoListScreen(
                                 modifier = modifier,
-                                onItemClick = {
+                                onItemClick = { it: Video ->
+                                    viewModel.onAction(VideoListActions.OnItemClick(it))
                                     navController.navigate(Route.VideoFullScreen)
                                 },
                                 refreshing = refreshing,
@@ -83,17 +91,15 @@ fun FurnitureNavigation(
                 }
                 composable<Route.VideoFullScreen>(
                     enterTransition = {
-                        slideInHorizontally { initialOffset ->
-                            initialOffset
-                        }
+                        fadeIn() + slideIn(initialOffset = { IntOffset(-it.width, 0) })
                     },
                     exitTransition = {
-                        slideOutHorizontally { initialOffset ->
-                            initialOffset
-                        }
+                        fadeOut() + slideOut(targetOffset = { IntOffset(-it.width, 0)})
                     }
                 ) {
-                    LiveStreamingScreen()
+                    LiveStreamingScreen(
+                        state = state
+                    )
                 }
             }
         }

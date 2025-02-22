@@ -11,76 +11,54 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
-import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.datasource.DefaultHttpDataSource
-import androidx.media3.exoplayer.ExoPlayer
-import androidx.media3.exoplayer.hls.HlsMediaSource
 import androidx.media3.exoplayer.source.ProgressiveMediaSource
 import androidx.media3.ui.PlayerView
-
-object ExoPlayerManager {
-    private var exoPlayer: ExoPlayer? = null
-
-    fun getExoPlayer(context: Context): ExoPlayer {
-        if (exoPlayer == null) {
-            exoPlayer = ExoPlayer.Builder(context).build()
-        }
-        return exoPlayer!!
-    }
-
-    fun releaseExoPlayer() {
-        exoPlayer?.release()
-        exoPlayer = null
-    }
-}
+import com.example.videoapp.video.presentation.videoList.VideoListState
 
 
 @OptIn(UnstableApi::class)
 @Composable
-fun LiveStreamingScreen() {
-
-    // Obtain the current context and lifecycle owner using LocalContext and LocalLifecycleOwner
+fun LiveStreamingScreen(
+    state:VideoListState
+) {
     val context = LocalContext.current
-    val lifecycleOwner = LocalLifecycleOwner.current
-
-    // Remember the ExoPlayer instance to persist across recompositions
     val exoPlayer = remember { ExoPlayerManager.getExoPlayer(context) }
-
-    // Launch an effect to initialize ExoPlayer and set up the media source
-    LaunchedEffect(key1 = Unit) {
-
-        // Create a data source factory for handling media requests
+    DisposableEffect(
+        key1 = Unit,
+    ) {
         val dataSourceFactory = DefaultHttpDataSource.Factory()
-
-        // Define the URI for the sample HLS stream
         val uri = Uri.Builder()
-            .encodedPath("https://cdn.coverr.co/videos/coverr-palacio-de-bellas-artes-8229/1080p.mp4?download=true")
+            .encodedPath(state.selectedItem!!.urls.mp4Download)
             .build()
         val mediaItem = MediaItem.Builder().setUri(uri).build()
 
-        // Create an HlsMediaSource from the media item for handling HTTP Live Streaming (HLS) content
         val internetVideoSource =
             ProgressiveMediaSource.Factory(dataSourceFactory).createMediaSource(mediaItem) // Changed MediaSource
 
         exoPlayer.setMediaSource(internetVideoSource)
         exoPlayer.prepare()
-
-        // Will be used in later implementation for Equalizer
-        //viewModel.onStart(exoPlayer.audioSessionId)
-
-
+        onDispose {
+            ExoPlayerManager.releaseExoPlayer()
+        }
     }
-    Box(modifier = Modifier.fillMaxSize()) {
+
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center,
+    ) {
         AndroidView(
             modifier =
             Modifier.fillMaxWidth()

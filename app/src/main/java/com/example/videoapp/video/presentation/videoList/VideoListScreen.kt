@@ -31,7 +31,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
-
 import com.example.videoapp.ui.theme.VideoAppTheme
 import com.example.videoapp.video.data.networking.dto.Urls
 import com.example.videoapp.video.domain.model.Video
@@ -48,7 +47,7 @@ fun VideoListScreen(
     onRefresh: () -> Unit,
     state: VideoListState,
     refreshing: Boolean,
-    onItemClick: () -> Unit
+    onItemClick: (Video) -> Unit
 ) {
         if(state.isLoading){
             Box(
@@ -58,51 +57,51 @@ fun VideoListScreen(
                 CircularProgressIndicator()
             }
         }else{
-            Scaffold(
-                topBar = {
-                    TopAppBar(
-                        title= { Text(
-                            text = "Furniture app",
-                            fontWeight = FontWeight.Normal,
-                            color = MaterialTheme.colorScheme.primary,
-                            overflow = TextOverflow.Ellipsis,
-                            maxLines = 4,
-                            fontSize = 22.sp
-                        ) },
-                        navigationIcon={ IconButton(onClick = {
-                            sendToast()
-                        }) { Icon(Icons.Filled.Menu, contentDescription = "Menu") }
-                        },
-                        colors= TopAppBarDefaults.topAppBarColors(
-                            containerColor = MaterialTheme.colorScheme.background,
-                            titleContentColor = MaterialTheme.colorScheme.primary,
-                            navigationIconContentColor = MaterialTheme.colorScheme.primary,
-                            actionIconContentColor = MaterialTheme.colorScheme.primary)
-                    )
-                },
-            ){innerPadding ->
                 SwipeRefresh(
                     modifier = modifier,
                     state = rememberSwipeRefreshState(isRefreshing = refreshing),
                     onRefresh = onRefresh,
                 ) {
-                    LazyVerticalGrid(
-                        state = rememberLazyGridState(),
-                        columns = GridCells.Fixed(2), // Создаёт сетку с 2 столбцами
-                        modifier = Modifier.fillMaxSize().padding(innerPadding)
-                    ) {
-                        items(state.videos) {
-                            MovieItemCard(
-                                modifier = Modifier.clickable{
-                                    onItemClick()
+                    Scaffold(
+                        topBar = {
+                            TopAppBar(
+                                title= { Text(
+                                    text = "Video app",
+                                    fontWeight = FontWeight.Normal,
+                                    color = MaterialTheme.colorScheme.primary,
+                                    overflow = TextOverflow.Ellipsis,
+                                    maxLines = 4,
+                                    fontSize = 22.sp
+                                ) },
+                                navigationIcon={ IconButton(onClick = {
+                                    sendToast()
+                                }) { Icon(Icons.Filled.Menu, contentDescription = "Menu") }
                                 },
-                                item = it
+                                colors= TopAppBarDefaults.topAppBarColors(
+                                    containerColor = MaterialTheme.colorScheme.background,
+                                    titleContentColor = MaterialTheme.colorScheme.primary,
+                                    navigationIconContentColor = MaterialTheme.colorScheme.primary,
+                                    actionIconContentColor = MaterialTheme.colorScheme.primary)
                             )
+                        },
+                    ) { innerPadding ->
+                        LazyVerticalGrid(
+                            state = rememberLazyGridState(),
+                            columns = GridCells.Fixed(3), // Создаёт сетку с 3 столбцами
+                            modifier = Modifier.fillMaxSize().padding(innerPadding)
+                        ) {
+                            items(state.videos) {
+                                MovieItemCard(
+                                    modifier = Modifier.clickable {
+                                        onItemClick(it)
+                                    },
+                                    item = it
+                                )
+                            }
                         }
                     }
                 }
-            }
-    }
+        }
 }
 
 

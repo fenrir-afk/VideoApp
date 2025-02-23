@@ -43,7 +43,7 @@ fun FurnitureNavigation(
     var refreshing by remember { mutableStateOf(false) }
     LaunchedEffect(refreshing) {
         if (refreshing) {
-            viewModel.loadVideos()
+            viewModel.onAction(VideoListActions.UpdateList)
             refreshing = false
         }
     }

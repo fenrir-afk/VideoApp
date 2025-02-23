@@ -43,6 +43,10 @@ class VideoViewModel(
                     selectedItem = action.item
                 ) }
             }
+
+            VideoListActions.UpdateList -> {
+                loadVideos()
+            }
         }
     }
     private suspend fun cachingVideos(items: List<Video>) {
@@ -66,7 +70,7 @@ class VideoViewModel(
             _events.send(VideoListEvent.DbError(error))
         }
     }
-    fun loadVideos(){
+    private fun loadVideos(){
         viewModelScope.launch(Dispatchers.IO) {
             remoteDataSource.getAllVideos(state.value.page).onSuccess { items->
                 _state.update {

@@ -14,7 +14,6 @@ suspend inline fun <reified T> safeCall(
     val response = try {
         execute()
     }catch (e:UnresolvedAddressException){
-        e.printStackTrace()
         return Result.Error(NetworkError.NO_INTERNET)
     }catch (e:SerializationException){
         e.printStackTrace()

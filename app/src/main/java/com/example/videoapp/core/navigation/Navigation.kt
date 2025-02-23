@@ -30,6 +30,9 @@ import com.example.videoapp.video.presentation.videoList.VideoListActions
 import com.example.videoapp.video.presentation.videoList.VideoListScreen
 import com.example.videoapp.video.presentation.videoList.VideoListEvent
 import com.example.videoapp.video.presentation.videoList.VideoViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -37,6 +40,7 @@ fun FurnitureNavigation(
     modifier: Modifier = Modifier,
     viewModel: VideoViewModel = koinViewModel()
 ) {
+    val scope = CoroutineScope(Dispatchers.IO)
     val navController = rememberNavController()
     val context = LocalContext.current
     val state by viewModel.state.collectAsStateWithLifecycle() // screen state
@@ -65,6 +69,10 @@ fun FurnitureNavigation(
                     Toast.LENGTH_LONG
                 ).show()
             }
+
+            is VideoListEvent.SetFullScreen -> {
+
+            }
         }
     }
     Surface(
@@ -82,7 +90,9 @@ fun FurnitureNavigation(
                             VideoListScreen(
                                 modifier = modifier,
                                 onItemClick = { it: Video ->
-                                    viewModel.onAction(VideoListActions.OnItemClick(it))
+                                    scope.launch {
+                                        viewModel.onAction(VideoListActions.OnItemClick(it))
+                                    }
                                     navController.navigate(Route.VideoFullScreen)
                                 },
                                 refreshing = refreshing,
@@ -104,7 +114,12 @@ fun FurnitureNavigation(
                     }
                 ) {
                     WatchVideoScreen(
-                        state = state
+                        state = state,
+                        setFullScreen = {isFullScreen->
+                            scope.launch {
+                                viewModel.onAction(VideoListActions.SetFullScreen(isFullScreen))
+                            }
+                        }
                     )
                 }
             }

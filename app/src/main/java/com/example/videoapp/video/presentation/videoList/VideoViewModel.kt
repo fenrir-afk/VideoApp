@@ -25,7 +25,6 @@ class VideoViewModel(
 
     private val _state = MutableStateFlow(VideoListState())
     val state = _state.
-
     onStart {
         loadVideos()
     }.stateIn(
@@ -33,10 +32,12 @@ class VideoViewModel(
         SharingStarted.WhileSubscribed(5000L),
         VideoListState()
     )
+
+
     private val _events = Channel<VideoListEvent>()
     val event = _events.receiveAsFlow()
 
-    fun onAction(action: VideoListActions){
+    suspend fun onAction(action: VideoListActions){
         when(action){
             is VideoListActions.OnItemClick -> {
                 _state.update { it.copy(
@@ -46,6 +47,10 @@ class VideoViewModel(
 
             VideoListActions.UpdateList -> {
                 loadVideos()
+            }
+
+            is VideoListActions.SetFullScreen -> {
+                _events.send(VideoListEvent.SetFullScreen(action.isFullScreen))
             }
         }
     }

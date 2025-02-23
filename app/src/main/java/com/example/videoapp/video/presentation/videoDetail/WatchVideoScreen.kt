@@ -5,7 +5,6 @@ import android.net.Uri
 import androidx.annotation.OptIn
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -30,7 +29,8 @@ import com.example.videoapp.video.presentation.videoList.VideoListState
 @OptIn(UnstableApi::class)
 @Composable
 fun WatchVideoScreen(
-    state:VideoListState
+    state:VideoListState,
+    setFullScreen:(Boolean) ->Unit
 ) {
     val context = LocalContext.current
     val exoPlayer = remember { ExoPlayerManager.getExoPlayer(context) }
@@ -58,11 +58,11 @@ fun WatchVideoScreen(
         contentAlignment = Alignment.Center,
     ) {
         AndroidView(
-            modifier =
-            Modifier.fillMaxWidth()
-                .aspectRatio(1.4f)
+            modifier = Modifier
+                .fillMaxWidth()
                 .padding(top = 16.dp)
                 .background(Color.Black),
+
             factory = {
                 PlayerView(context).apply {
                     // Connect the ExoPlayer instance to the PlayerView
@@ -71,8 +71,11 @@ fun WatchVideoScreen(
                     exoPlayer.repeatMode = Player.REPEAT_MODE_ONE
                     exoPlayer.playWhenReady = false
                     useController = true
+                    setFullscreenButtonClickListener { isFullScreen ->
+                        setFullScreen(isFullScreen)
+                    }
                 }
-            }
+            },
         )
     }
 }

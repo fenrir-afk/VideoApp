@@ -6,4 +6,5 @@ import com.example.videoapp.core.domain.util.NetworkError
 sealed interface VideoListEvent {
     data class NetError(val error: NetworkError):VideoListEvent
     data class DbError(val error: DataBaseError):VideoListEvent
+    data class SetFullScreen(val isFullScreen:Boolean) : VideoListEvent
 }

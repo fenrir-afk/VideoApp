@@ -84,6 +84,7 @@ dependencies {
     ksp(libs.androidx.room.compiler)
 
     implementation(libs.gson)
+    implementation(libs.accompanist.systemuicontroller)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

@@ -70,6 +70,7 @@ class VideoViewModel(
                 _state.update {
                     it.copy(
                         isLoading = false,
+                        cachedData = true,
                         videos = items,
                     )
                 }
@@ -86,6 +87,7 @@ class VideoViewModel(
                     it.copy(
                         page = it.page + 1,
                         isLoading = false,
+                        cachedData = false,
                         videos = items,
                     )
                 }

@@ -5,14 +5,17 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideIn
 import androidx.compose.animation.slideOut
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.IntOffset
@@ -93,7 +96,11 @@ fun FurnitureNavigation(
                                     scope.launch {
                                         viewModel.onAction(VideoListActions.OnItemClick(it))
                                     }
-                                    navController.navigate(Route.VideoFullScreen)
+                                    if(state.cachedData){
+                                        navController.navigate(Route.NoInternetScreen)
+                                    }else{
+                                        navController.navigate(Route.VideoFullScreen)
+                                    }
                                 },
                                 refreshing = refreshing,
                                 sendToast = {
@@ -121,6 +128,21 @@ fun FurnitureNavigation(
                             }
                         }
                     )
+                }
+                composable<Route.NoInternetScreen>(
+                    enterTransition = {
+                        fadeIn() + slideIn(initialOffset = { IntOffset(-it.width, 0) })
+                    },
+                    exitTransition = {
+                        fadeOut() + slideOut(targetOffset = { IntOffset(-it.width, 0)})
+                    }
+                ) {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ){
+                        Text("Unable to load video. Please turn on the internet and go to video list and update it")
+                    }
                 }
             }
         }

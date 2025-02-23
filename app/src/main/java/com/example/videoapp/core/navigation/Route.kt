@@ -12,4 +12,7 @@ sealed interface Route {
 
     @Serializable
     data object VideoFullScreen: Route
+
+    @Serializable
+    data object NoInternetScreen: Route
 }

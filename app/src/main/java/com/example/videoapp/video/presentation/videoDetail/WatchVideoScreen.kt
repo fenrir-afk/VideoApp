@@ -5,7 +5,6 @@ import android.net.Uri
 import androidx.annotation.OptIn
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
@@ -60,7 +59,6 @@ fun WatchVideoScreen(
         AndroidView(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 16.dp)
                 .background(Color.Black),
 
             factory = {

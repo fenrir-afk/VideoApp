@@ -9,5 +9,6 @@ data class VideoListState(
     val isLoading:Boolean = true,
     val videos:List<Video> = emptyList(),
     val selectedItem:Video? = null,
+    val cachedData:Boolean = false,
     val page:Int = 0
 )

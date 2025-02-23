@@ -11,5 +11,5 @@ data class Hit(
     @SerialName("poster") val poster: String,
     @SerialName("thumbnail") val thumbnail: String,
     @SerialName("title") val title: String,
-    @SerialName("urls") val urls: Urls,
+    @SerialName("urls") val urls: UrlsDto,
 )

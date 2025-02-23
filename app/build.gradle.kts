@@ -1,10 +1,11 @@
-import com.android.build.api.dsl.Packaging
+
 
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.serializaion)
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -75,9 +76,14 @@ dependencies {
     implementation(libs.androidx.media3.exoplayer) // [Required] androidx.media3 ExoPlayer dependency
     implementation(libs.androidx.media3.session) // [Required] MediaSession Extension dependency
     implementation(libs.androidx.media3.ui) // [Required] Base Player UI
-
+    //swipe refresh layout
     implementation(libs.accompanist.swiperefresh)
+    //room
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
 
+    implementation(libs.gson)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

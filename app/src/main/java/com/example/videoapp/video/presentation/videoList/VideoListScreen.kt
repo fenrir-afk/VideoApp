@@ -32,7 +32,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.example.videoapp.ui.theme.VideoAppTheme
-import com.example.videoapp.video.data.networking.dto.Urls
+import com.example.videoapp.video.domain.model.Urls
 import com.example.videoapp.video.domain.model.Video
 import com.example.videoapp.video.presentation.videoList.components.MovieItemCard
 import com.google.accompanist.swiperefresh.SwipeRefresh

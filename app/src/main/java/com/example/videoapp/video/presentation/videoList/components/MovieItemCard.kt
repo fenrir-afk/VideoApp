@@ -30,7 +30,7 @@ import coil3.request.ImageRequest
 import coil3.request.crossfade
 import com.example.videoapp.R
 import com.example.videoapp.ui.theme.VideoAppTheme
-import com.example.videoapp.video.data.networking.dto.Urls
+import com.example.videoapp.video.domain.model.Urls
 import com.example.videoapp.video.domain.model.Video
 
 

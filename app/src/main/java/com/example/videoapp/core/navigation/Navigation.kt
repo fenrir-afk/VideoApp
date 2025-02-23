@@ -50,10 +50,18 @@ fun FurnitureNavigation(
 
     ObserveAsEvents(events = viewModel.event) {event ->
         when(event){
-            is VideoListEvent.Error -> {
+            is VideoListEvent.NetError -> {
                 Toast.makeText(
                     context,
-                    event.error.toString(),
+                    "Network Error: ${event.error}",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+
+            is VideoListEvent.DbError -> {
+                Toast.makeText(
+                    context,
+                    "Database Error: ${event.error}",
                     Toast.LENGTH_LONG
                 ).show()
             }

@@ -1,6 +1,5 @@
 package com.example.videoapp.video.domain.model
 
-import com.example.videoapp.video.data.networking.dto.Urls
 
 data class Video(
     val description: String,

@@ -54,25 +54,29 @@ class VideoViewModel(
             }
         }
     }
-    private suspend fun cachingVideos(items: List<Video>) {
-        localDataSource.replacePrevVideos(items).onSuccess {
-            Log.i("CAHING","The data has been cached successfully")
-        }.onError {error ->
-            Log.i("CAHING","The data has not been cached successfully")
-            _events.send(VideoListEvent.DbError(error))
+    private  fun cachingVideos(items: List<Video>) {
+        viewModelScope.launch(Dispatchers.IO) {
+            localDataSource.replacePrevVideos(items).onSuccess {
+                Log.i("CAHING","The data has been cached successfully")
+            }.onError {error ->
+                Log.i("CAHING","The data has not been cached successfully")
+                _events.send(VideoListEvent.DbError(error))
+            }
         }
     }
-    private suspend fun getCachedVideos() {
-        localDataSource.getAllVideos().onSuccess {items ->
-            _state.update {
-                it.copy(
-                    isLoading = false,
-                    videos = items,
-                )
+    private  fun getCachedVideos() {
+        viewModelScope.launch(Dispatchers.IO) {
+            localDataSource.getAllVideos().onSuccess {items ->
+                _state.update {
+                    it.copy(
+                        isLoading = false,
+                        videos = items,
+                    )
+                }
+            }.onError {error ->
+                Log.i("CAHING",error.name)
+                _events.send(VideoListEvent.DbError(error))
             }
-        }.onError {error ->
-            Log.i("CAHING",error.name)
-            _events.send(VideoListEvent.DbError(error))
         }
     }
     private fun loadVideos(){

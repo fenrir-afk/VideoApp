@@ -54,7 +54,7 @@ fun WatchVideoScreen(
     }
 
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxWidth(),
         contentAlignment = Alignment.Center,
     ) {
         AndroidView(

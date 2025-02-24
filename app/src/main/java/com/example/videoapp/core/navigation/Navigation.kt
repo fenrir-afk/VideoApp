@@ -1,6 +1,5 @@
 package com.example.videoapp.core.navigation
 
-import android.content.pm.ActivityInfo
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.fadeIn
@@ -35,7 +34,7 @@ import com.example.videoapp.video.presentation.videoDetail.WatchVideoScreen
 import com.example.videoapp.video.presentation.videoList.VideoListActions
 import com.example.videoapp.video.presentation.videoList.VideoListScreen
 import com.example.videoapp.video.presentation.videoList.VideoListEvent
-import com.example.videoapp.video.presentation.videoList.VideoViewModel
+import com.example.videoapp.video.presentation.VideoViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

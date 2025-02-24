@@ -15,7 +15,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import com.example.videoapp.core.navigation.FurnitureNavigation
 import com.example.videoapp.ui.theme.VideoAppTheme
-import com.example.videoapp.video.presentation.videoList.VideoViewModel
+import com.example.videoapp.video.presentation.VideoViewModel
 import com.google.accompanist.systemuicontroller.SystemUiController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import org.koin.androidx.compose.koinViewModel
@@ -26,7 +26,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            var screenState = rememberSaveable{ mutableStateOf(true) }
+            val screenState = rememberSaveable{ mutableStateOf(true) }
             ScreenOrientationFun(
                 modifier = Modifier,
                 screenState,

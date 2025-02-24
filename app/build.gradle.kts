@@ -81,6 +81,7 @@ dependencies {
     //room
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
+    testImplementation(libs.junit.junit)
     ksp(libs.androidx.room.compiler)
 
     implementation(libs.gson)
@@ -95,11 +96,35 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.media3.exoplayer.hls)
-    testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+
+    // Local unit tests
+    testImplementation(libs.androidx.core)
+    testImplementation(libs.junit)
+    testImplementation(libs.androidx.core.testing)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.truth)
+    testImplementation(libs.mockwebserver)
+    testImplementation(libs.mockk)
+    debugImplementation(libs.ui.test.manifest)
+
+
+    // Instrumentation tests
+    androidTestImplementation(libs.hilt.android.testing)
+    kspAndroidTest(libs.hilt.android.compiler)
+    androidTestImplementation(libs.junit)
+    androidTestImplementation(libs.kotlinx.coroutines.test.v151)
+    androidTestImplementation( libs.androidx.core.testing.v210)
+    androidTestImplementation(libs.truth)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.core.ktx)
+    androidTestImplementation( libs.mockwebserver)
+    androidTestImplementation( libs.mockk.android)
+    androidTestImplementation(libs.androidx.runner)
 }

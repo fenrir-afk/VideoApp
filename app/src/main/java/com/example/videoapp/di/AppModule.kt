@@ -6,7 +6,7 @@ import com.example.videoapp.video.data.local.database.VideoDatabase
 import com.example.videoapp.video.data.networking.VideoDataSourceImp
 import com.example.videoapp.video.domain.dataSource.LocalVideoDataSource
 import com.example.videoapp.video.domain.dataSource.VideoDataSource
-import com.example.videoapp.video.presentation.videoList.VideoViewModel
+import com.example.videoapp.video.presentation.VideoViewModel
 import io.ktor.client.engine.cio.CIO
 import org.koin.core.module.dsl.singleOf
 import org.koin.core.module.dsl.viewModelOf

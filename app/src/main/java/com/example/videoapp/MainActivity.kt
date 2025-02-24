@@ -14,9 +14,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import com.example.videoapp.core.navigation.FurnitureNavigation
-import com.example.videoapp.core.presentation.ObserveAsEvents
 import com.example.videoapp.ui.theme.VideoAppTheme
-import com.example.videoapp.video.presentation.videoList.VideoListEvent
 import com.example.videoapp.video.presentation.videoList.VideoViewModel
 import com.google.accompanist.systemuicontroller.SystemUiController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -24,7 +22,6 @@ import org.koin.androidx.compose.koinViewModel
 
 
 class MainActivity : ComponentActivity() {
-    @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -35,20 +32,10 @@ class MainActivity : ComponentActivity() {
                 screenState,
                 this
             )
-            val viewModel = koinViewModel<VideoViewModel>()
-            ObserveAsEvents(events = viewModel.event) {event ->
-                when(event){
-                    is VideoListEvent.NetError -> {}
-                    is VideoListEvent.DbError -> {}
-                    is VideoListEvent.SetFullScreen -> {
-                        screenState.value = !screenState.value
-                    }
-                }
-            }
             VideoAppTheme {
                 FurnitureNavigation(
                     modifier = Modifier.fillMaxSize(),
-                    viewModel = viewModel,
+                    viewModel = koinViewModel<VideoViewModel>(),
                     screenState
                 )
             }
@@ -56,6 +43,9 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+
+
+@SuppressLint("SourceLockedOrientationActivity")
 @Composable
 fun ScreenOrientationFun(
     modifier: Modifier = Modifier,
@@ -64,8 +54,6 @@ fun ScreenOrientationFun(
 ) {
     val systemUiController: SystemUiController = rememberSystemUiController()
     LaunchedEffect(screenState.value){
-        systemUiController.isStatusBarVisible = screenState.value // Status bar
-        systemUiController.isNavigationBarVisible = screenState.value // Navigation bar
         systemUiController.isSystemBarsVisible = screenState.value // Status & Navigation bars
         if(!screenState.value){
             mainActivity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE

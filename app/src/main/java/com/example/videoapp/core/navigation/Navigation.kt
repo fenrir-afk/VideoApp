@@ -78,7 +78,7 @@ fun FurnitureNavigation(
             }
 
             is VideoListEvent.SetFullScreen -> {
-
+                screenState.value = !screenState.value
             }
         }
     }

@@ -7,7 +7,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
@@ -28,19 +30,11 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             var screenState = rememberSaveable{ mutableStateOf(true) }
-            val systemUiController: SystemUiController = rememberSystemUiController()
-            LaunchedEffect(screenState.value){
-                systemUiController.isStatusBarVisible = screenState.value // Status bar
-                systemUiController.isNavigationBarVisible = screenState.value // Navigation bar
-                systemUiController.isSystemBarsVisible = screenState.value // Status & Navigation bars
-                if(!screenState.value){
-                    requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
-                }
-                if(screenState.value){
-                    requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT // This is done to switch the screen to portrait mode so that the user understands that the transition from fullscreen mode is complete.
-                    requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
-                }
-            }
+            ScreenOrientationFun(
+                modifier = Modifier,
+                screenState,
+                this
+            )
             val viewModel = koinViewModel<VideoViewModel>()
             ObserveAsEvents(events = viewModel.event) {event ->
                 when(event){
@@ -54,9 +48,31 @@ class MainActivity : ComponentActivity() {
             VideoAppTheme {
                 FurnitureNavigation(
                     modifier = Modifier.fillMaxSize(),
-                    viewModel = viewModel
+                    viewModel = viewModel,
+                    screenState
                 )
             }
+        }
+    }
+}
+
+@Composable
+fun ScreenOrientationFun(
+    modifier: Modifier = Modifier,
+    screenState: MutableState<Boolean>,
+    mainActivity: MainActivity
+) {
+    val systemUiController: SystemUiController = rememberSystemUiController()
+    LaunchedEffect(screenState.value){
+        systemUiController.isStatusBarVisible = screenState.value // Status bar
+        systemUiController.isNavigationBarVisible = screenState.value // Navigation bar
+        systemUiController.isSystemBarsVisible = screenState.value // Status & Navigation bars
+        if(!screenState.value){
+            mainActivity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+        }
+        if(screenState.value){
+            mainActivity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT // This is done to switch the screen to portrait mode so that the user understands that the transition from fullscreen mode is complete.
+            mainActivity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
         }
     }
 }

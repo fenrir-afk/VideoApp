@@ -1,6 +1,8 @@
 package com.example.videoapp.core.navigation
 
+import android.content.pm.ActivityInfo
 import android.widget.Toast
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideIn
@@ -11,6 +13,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -41,7 +44,8 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun FurnitureNavigation(
     modifier: Modifier = Modifier,
-    viewModel: VideoViewModel = koinViewModel()
+    viewModel: VideoViewModel = koinViewModel(),
+    screenState: MutableState<Boolean>
 ) {
     val scope = CoroutineScope(Dispatchers.IO)
     val navController = rememberNavController()
@@ -120,6 +124,10 @@ fun FurnitureNavigation(
                         fadeOut() + slideOut(targetOffset = { IntOffset(-it.width, 0)})
                     }
                 ) {
+                    BackHandler(true) {
+                        screenState.value = true
+                        navController.popBackStack()
+                    }
                     WatchVideoScreen(
                         state = state,
                         setFullScreen = {isFullScreen->

@@ -29,12 +29,14 @@ android {
             buildConfigField("String","BASE_URL","\"https://api.coverr.co/videos/\"")
         }
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
             buildConfigField("String","BASE_URL","\"https://api.coverr.co/videos/\"")
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
     compileOptions {
@@ -81,7 +83,6 @@ dependencies {
     //room
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
-    testImplementation(libs.junit.junit)
     ksp(libs.androidx.room.compiler)
 
     implementation(libs.gson)
@@ -119,8 +120,8 @@ dependencies {
     androidTestImplementation(libs.hilt.android.testing)
     kspAndroidTest(libs.hilt.android.compiler)
     androidTestImplementation(libs.junit)
-    androidTestImplementation(libs.kotlinx.coroutines.test.v151)
-    androidTestImplementation( libs.androidx.core.testing.v210)
+    androidTestImplementation(libs.kotlinx.coroutines.test)
+    androidTestImplementation( libs.androidx.core.testing)
     androidTestImplementation(libs.truth)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.core.ktx)
